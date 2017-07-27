@@ -1,8 +1,8 @@
-package bugzy.endlessadapter.activity;
+package bugzy.endlessadaptersample.activity;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -10,19 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import bugzy.endlessadapter.LoadCompletedListener;
+import bugzy.endlessadapter.LoadMoreListener;
 import bugzy.endlessadapter.R;
-import bugzy.endlessadapter.adapter.ItemAdapter;
-import bugzy.endlessadapter.listeners.LoadCompletedListener;
-import bugzy.endlessadapter.listeners.LoadMoreListener;
-import bugzy.endlessadapter.model.Item;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import bugzy.endlessadaptersample.adapter.ItemAdapter;
+import bugzy.endlessadaptersample.model.Item;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private ItemAdapter itemAdapter;
@@ -31,10 +27,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        findElements();
         initializeRecyclerView();
         initializeSwipeRefreshLayout();
         showData();
+    }
+
+    private void findElements() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
     }
 
     private void initializeRecyclerView() {

@@ -1,4 +1,4 @@
-package bugzy.endlessadapter.listeners;
+package bugzy.endlessadapter;
 
 /**
  * Created by omar on 7/12/17.

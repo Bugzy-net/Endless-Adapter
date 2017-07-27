@@ -1,4 +1,4 @@
-package bugzy.endlessadapter.adapter;
+package bugzy.endlessadaptersample.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import bugzy.endlessadapter.EndlessAdapter;
+import bugzy.endlessadapter.LoadMoreListener;
 import bugzy.endlessadapter.R;
-import bugzy.endlessadapter.listeners.LoadMoreListener;
-import bugzy.endlessadapter.model.Item;
-import bugzy.endlessadapter.viewholder.ItemViewHolder;
+import bugzy.endlessadaptersample.model.Item;
+import bugzy.endlessadaptersample.viewholder.ItemViewHolder;
 
 /**
  * Created by omar on 7/12/17.

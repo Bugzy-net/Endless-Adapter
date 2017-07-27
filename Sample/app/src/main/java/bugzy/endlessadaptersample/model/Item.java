@@ -1,4 +1,4 @@
-package bugzy.endlessadapter.model;
+package bugzy.endlessadaptersample.model;
 
 /**
  * Created by omar on 7/12/17.

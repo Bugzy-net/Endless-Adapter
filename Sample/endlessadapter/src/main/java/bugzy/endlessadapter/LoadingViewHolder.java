@@ -1,4 +1,4 @@
-package bugzy.endlessadapter.viewholder;
+package bugzy.endlessadapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
