@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import bugzy.endlessadapter.R;
+import bugzy.endlessadaptersample.R;
 
 /**
  * Created by omar on 7/12/17.

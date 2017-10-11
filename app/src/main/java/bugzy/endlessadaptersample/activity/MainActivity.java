@@ -12,7 +12,7 @@ import java.util.Random;
 
 import bugzy.endlessadapter.LoadCompletedListener;
 import bugzy.endlessadapter.LoadMoreListener;
-import bugzy.endlessadapter.R;
+import bugzy.endlessadaptersample.R;
 import bugzy.endlessadaptersample.adapter.ItemAdapter;
 import bugzy.endlessadaptersample.model.Item;
 

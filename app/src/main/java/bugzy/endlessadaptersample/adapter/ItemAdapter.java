@@ -10,7 +10,7 @@ import java.util.List;
 
 import bugzy.endlessadapter.EndlessAdapter;
 import bugzy.endlessadapter.LoadMoreListener;
-import bugzy.endlessadapter.R;
+import bugzy.endlessadaptersample.R;
 import bugzy.endlessadaptersample.model.Item;
 import bugzy.endlessadaptersample.viewholder.ItemViewHolder;
 
@@ -36,8 +36,7 @@ public class ItemAdapter extends EndlessAdapter<Item, RecyclerView.ViewHolder> {
     }
 
     @Override
-    protected void onBindNormalView(RecyclerView.ViewHolder viewHolder, int position) {
-        Item item = data.get(position);
+    protected void onBindNormalView(RecyclerView.ViewHolder viewHolder, int position, Item item) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
         itemViewHolder.textView.setText(item.getName());
 

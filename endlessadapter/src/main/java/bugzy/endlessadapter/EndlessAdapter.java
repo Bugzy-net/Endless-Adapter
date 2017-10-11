@@ -2,9 +2,12 @@ package bugzy.endlessadapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -22,17 +25,22 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
     protected LayoutInflater inflater;
     protected boolean isLoading = false;
 
-    public EndlessAdapter(@NonNull Context context, @NonNull List<T> data, LoadMoreListener loadMoreListener) {
+    public EndlessAdapter(@NonNull Context context, @NonNull List<T> data, @Nullable LoadMoreListener loadMoreListener) {
         inflater = LayoutInflater.from(context);
         this.data = data;
         this.loadMoreListener = loadMoreListener;
+        if (loadMoreListener == null) {
+            setEndless(false);
+        }
     }
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == FOOTER_VIEW) {
+            ProgressBar progressBar = new ProgressBar(parent.getContext());
+            progressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             //noinspection unchecked
-            return (VH) new LoadingViewHolder(inflater.inflate(R.layout.layout_loading, parent, false));
+            return (VH) new LoadingViewHolder(progressBar);
         }
         return null;
     }
@@ -50,7 +58,8 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
     public void onBindViewHolder(VH holder, int position) {
         int viewType = getItemViewType(position);
         if (viewType == NORMAL_VIEW) {
-            onBindNormalView(holder, position);
+            T object = data.get(position);
+            onBindNormalView(holder, position, object);
         } else {
             onBindLoadingView();
         }
@@ -91,10 +100,10 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
         notifyDataSetChanged();
     }
 
-    protected abstract void onBindNormalView(VH viewHolder, int position);
+    protected abstract void onBindNormalView(VH viewHolder, int position, T object);
 
     protected void onBindLoadingView() {
-        if (!isLoading) {
+        if (!isLoading && !data.isEmpty()) {
             isLoading = true;
             loadMoreListener.loadMore(new LoadCompletedListener() {
                 @Override
@@ -105,6 +114,12 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
                     isLoading = false;
                 }
             });
+        }
+    }
+
+    public class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public LoadingViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }
