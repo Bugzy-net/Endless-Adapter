@@ -1,6 +1,6 @@
 # Endless-Adapter
 
-An endless adapter, where you can add/remove items easily and effeciently
+An endless adapter, where you can add items easily, effeciently and endlessly
 
 ## Getting Started
 
@@ -31,62 +31,61 @@ then in your module build.gradle add this
 ```
 dependencies {
     ...
-    implementation 'com.github.Bugzy-net:Endless-Adapter:1.0.4'
+    implementation 'com.github.Bugzy-net:Endless-Adapter:1.0.5'
 }
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Enldess Adapter Class
 
-## Running the tests
+### Properties
 
-Explain how to run the automated tests for this system
+- *FOOTER_VIEW* (Loading view holder)
+- *NORMAL_VIEW* (Item view holder)
 
-### Break down into end to end tests
+- *data* is a List of a generic type specified with initialization of the class.
+- *showLoading* indicates wether the adapter should show the loading viewholder at the end or not
+- *loadMoreListener* a listener to be called when the loading view holder is shown.
+- *inflater* took the inflater as a global variable instead creating new one with every create.
+- *isLoading* flag indicates whether the adapter is waiting for new data or not.
 
-Explain what these tests test and why
+### Generic Types
+- *T* type of Object that will be used to fill the adapter.
+- *VH* type of view holder used as a normal view holder.
 
+## How to use
+
+### Create Adapter
+1. Create a class and extend *EndlessAdapter*
+2. Implement *onCreateViewHolder*
 ```
-Give an example
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+        if (viewHolder == null) {
+            return new YourCustomViewHolder(inflater.inflate(R.layout.you_custom_layout, parent, false));
+        } else {
+            return viewHolder;
+        }
+    }
+```
+3. Implement *onBindNormalView*
+```
+    @Override
+    protected void onBindNormalView(RecyclerView.ViewHolder viewHolder, int position, Item item) {
+        YourCustomViewHolder itemViewHolder = (YourCustomViewHolder) viewHolder;
+    }
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
+### Use the adapter
 ```
-Give an example
+itemAdapter = new ItemAdapter(context, createItems(), new LoadMoreListener() {
+            @Override
+            public void loadMore(final LoadCompletedListener loadCompletedListener) {
+                    itemAdapter.addItems(newItems);
+                    loadCompletedListener.onLoadCompleted(true);
+                    
+                    // Here you can check if this is the last patch
+                    adapter.setEndless(lastPatch);
+            }
+        });
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
